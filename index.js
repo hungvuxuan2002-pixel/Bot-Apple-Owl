@@ -37,7 +37,7 @@ const HUG_MESSAGES = [
 ];
 
 const fireGifs = [
-    "https://static2.klipy.com/ii/4493325008d34b7bf8cd6813cd5c1619/44/f0/ALd4Vf2IrxRxTR6x5b8.gif"
+    "https://klipy.com"
 ];
 
 client.once('ready', () => {
@@ -115,7 +115,7 @@ client.on('messageCreate', async (message) => {
 
         const embed = new EmbedBuilder()
             .setTitle('🎒 Kho Nguyên Liệu Của Bạn')
-            .setDescription(`🌾 **Bột mì:** ${inv.bot}\n🍬 **Đường cát:** ${inv.duong}\n🥚 **Trứng gà:** ${inv.trung}\n\n🏆 **Điểm thợ bánh:** \`\${inv.diem}\` điểm`)
+            .setDescription(`🌾 **Bột mì:** ${inv.bot}\n🍬 **Đường cát:** ${inv.duong}\n🥚 **Trứng gà:** ${inv.trung}\n\n🏆 **Điểm thợ bánh:** **${inv.diem}** điểm`)
             .setColor('#AA8200')
             .setTimestamp();
 
@@ -172,7 +172,7 @@ client.on('messageCreate', async (message) => {
         let description = '';
         const medals = ['🥇', '🥈', '🥉', '✨', '✨'];
         sortedList.forEach((user, index) => {
-            description += `${medals[index]} **Top ${index + 1}:** <@${user.id}> — \`\${user.diem}\` điểm\n`;
+            description += `${medals[index]} **Top ${index + 1}:** <@${user.id}> — **${user.diem}** điểm\n`;
         });
 
         const embed = new EmbedBuilder()
@@ -186,5 +186,3 @@ client.on('messageCreate', async (message) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
-
-
