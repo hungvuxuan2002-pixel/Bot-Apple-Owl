@@ -51,7 +51,7 @@ client.on('messageCreate', async (message) => {
     const command = argsContent[0].toLowerCase();
     const userId = message.author.id;
 
-    if (command === '!guide' || command === '!help') {
+     if (command === '!guide' || command === '!help') {
         const embed = new EmbedBuilder()
             .setTitle('📖 CẨM NANG HƯỚNG DẪN SỬ DỤNG BOT')
             .setDescription(`Chào mừng bạn đến với hệ thống tương tác và mini-game của Server! Dưới đây là danh sách các lệnh bạn có thể sử dụng:`)
@@ -59,7 +59,7 @@ client.on('messageCreate', async (message) => {
             .addFields(
                 { 
                     name: '💕 Nhóm Lệnh Tương Tác', 
-                    value: '• \`!hon @user\`: Gửi một cái hôn nồng cháy kèm ảnh GIF ngọt ngào đến người được tag.' 
+                    value: '• \`!hon @user\`: Gửi một cái hôn nồng cháy.\n• \`!dosonuoc @user\`: 🪣 Đổ xô nước đá lạnh buốt hoặc tạt nước 🌊 vào mặt ai đó.\n• \`!hadoc @user\`: 🧪 Lén bỏ thuốc độc khiến đối phương sùi bọt mép ☠️.\n• \`!chichdien @user\`: ⚡ Rút dùi cui điện chích tê tái, giật tung tóc 🔌.' 
                 },
                 { 
                     name: '🧑‍🍳 Nhóm Lệnh Làm Bánh (Mini-Game)', 
@@ -70,6 +70,8 @@ client.on('messageCreate', async (message) => {
             .setTimestamp();
 
         return message.channel.send({ embeds: [embed] });
+    }
+
     }
 
     if (command === '!hon') {
