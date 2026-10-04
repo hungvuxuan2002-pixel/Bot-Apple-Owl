@@ -180,9 +180,69 @@ client.on('messageCreate', async (message) => {
             .setDescription(description)
             .setColor('#FFD700')
             .setTimestamp();
+    
+    if (command === '!doxonuoc') {
+        const targetArgs = message.content.slice(10).trim();
+        if (!targetArgs) return message.channel.send(`<@${message.author.id}> định đổ nước vào ai thế? Tag người đó vào nhé! 🪣`);
+
+        const gifs = [
+            "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExY28wMzdoanppa3pjdzg2dHQ3b205bGl3bHBoMWxtZzA5N2o5YzloeCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Za2x9wbfVuQb6/giphy.webp"
+            
+        ];
+
+        const responses = [
+            `<@${message.author.id}> đã đổ nguyên một xô nước đá lạnh buốt lên đầu ${targetArgs}! 🥶`,
+        ];
+        
+        const embed = new EmbedBuilder()
+            .setDescription(responses[Math.floor(Math.random() * responses.length)])
+            .setColor("#00BFFF")
+            .setImage(gifs[Math.floor(Math.random() * gifs.length)])
+            .setTimestamp();
 
         return message.channel.send({ embeds: [embed] });
     }
-});
+
+    if (command === '!hadoc') {
+        const targetArgs = message.content.slice(7).trim();
+        if (!targetArgs) return message.channel.send(`<@${message.author.id}> định hạ độc ai cơ? Gắn thẻ họ vào đi! 🧪`);
+
+        const gifs = [
+            "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjA4MTJxeWUzeHhtNzRpZXd3OWhpYTlodXBhcHFwajJ6MWo0eHRxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE4hinbJvjsgGxW/giphy.gif"
+        ];
+
+        const responses = [
+            `<@${message.author.id}> tặng ${targetArgs} một quả táo độc. ${targetArgs} cắn một miếng rồi ngất lịm! 🍎`
+        ];
+
+        const embed = new EmbedBuilder()
+            .setDescription(responses[Math.floor(Math.random() * responses.length)])
+            .setColor("#8B008B")
+            .setImage(gifs[Math.floor(Math.random() * gifs.length)])
+            .setTimestamp();
+
+        return message.channel.send({ embeds: [embed] });
+    }
+
+    if (command === '!chichdien') {
+        const targetArgs = message.content.slice(10).trim();
+        if (!targetArgs) return message.channel.send(`<@${message.author.id}> muốn chích điện ai thế? Nhớ tag tên nhé! ⚡`);
+
+        const gifs = [
+            "https://media.tenor.com/WK-AZItKuX0AAAAM/abster-abstract.gif"
+        ];
+
+        const responses = [
+            `<@${message.author.id}> rút dùi cui điện ra và chích... ${targetArgs} giật bắn người, tóc dựng ngược! ⚡`,
+        ];
+
+        const embed = new EmbedBuilder()
+            .setDescription(responses[Math.floor(Math.random() * responses.length)])
+            .setColor("#FFD700")
+            .setImage(gifs[Math.floor(Math.random() * gifs.length)])
+            .setTimestamp();
+
+        return message.channel.send({ embeds: [embed] });
+    }
 
 client.login(process.env.DISCORD_TOKEN);
