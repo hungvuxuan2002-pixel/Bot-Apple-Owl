@@ -184,7 +184,7 @@ client.on('messageCreate', async (message) => {
         return message.channel.send({ embeds: [embed] });
     }
 
-    if (command === '!dõonuoc') {
+    if (command === '!doxonuoc') {
         const targetArgs = message.content.slice(10).trim();
         if (!targetArgs) return message.channel.send(`<@${message.author.id}> định đổ nước vào ai thế? Tag người đó vào nhé! 🪣`);
 
