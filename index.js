@@ -72,8 +72,6 @@ client.on('messageCreate', async (message) => {
         return message.channel.send({ embeds: [embed] });
     }
 
-    }
-
     if (command === '!hon') {
         const targetArgs = message.content.slice(4).trim();
         if (!targetArgs) {
@@ -182,8 +180,11 @@ client.on('messageCreate', async (message) => {
             .setDescription(description)
             .setColor('#FFD700')
             .setTimestamp();
-    
-    if (command === '!doxonuoc') {
+
+        return message.channel.send({ embeds: [embed] });
+    }
+
+    if (command === '!dosonuoc') {
         const targetArgs = message.content.slice(10).trim();
         if (!targetArgs) return message.channel.send(`<@${message.author.id}> định đổ nước vào ai thế? Tag người đó vào nhé! 🪣`);
 
@@ -246,5 +247,6 @@ client.on('messageCreate', async (message) => {
 
         return message.channel.send({ embeds: [embed] });
     }
+});
 
 client.login(process.env.DISCORD_TOKEN);
