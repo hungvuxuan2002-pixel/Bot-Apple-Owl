@@ -59,7 +59,7 @@ client.on('messageCreate', async (message) => {
             .addFields(
                 { 
                     name: '💕 Nhóm Lệnh Tương Tác', 
-                    value: '• \`!hon @user\`: Gửi một cái hôn nồng cháy.\n• \`!dosonuoc @user\`: 🪣 Đổ xô nước đá lạnh buốt hoặc tạt nước 🌊 vào mặt ai đó.\n• \`!hadoc @user\`: 🧪 Lén bỏ thuốc độc khiến đối phương sùi bọt mép ☠️.\n• \`!chichdien @user\`: ⚡ Rút dùi cui điện chích tê tái, giật tung tóc 🔌.' 
+                    value: '• \`!hon @user\`: Gửi một cái hôn nồng cháy.\n• \`!doxonuoc @user\`: 🪣 Đổ xô nước đá lạnh buốt hoặc tạt nước 🌊 vào mặt ai đó.\n• \`!hadoc @user\`: 🧪 Lén bỏ thuốc độc khiến đối phương sùi bọt mép ☠️.\n• \`!chichdien @user\`: ⚡ Rút dùi cui điện chích tê tái, giật tung tóc 🔌.' 
                 },
                 { 
                     name: '🧑‍🍳 Nhóm Lệnh Làm Bánh (Mini-Game)', 
@@ -184,7 +184,7 @@ client.on('messageCreate', async (message) => {
         return message.channel.send({ embeds: [embed] });
     }
 
-    if (command === '!dosonuoc') {
+    if (command === '!dõonuoc') {
         const targetArgs = message.content.slice(10).trim();
         if (!targetArgs) return message.channel.send(`<@${message.author.id}> định đổ nước vào ai thế? Tag người đó vào nhé! 🪣`);
 
