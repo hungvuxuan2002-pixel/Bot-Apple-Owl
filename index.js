@@ -59,11 +59,11 @@ client.on('messageCreate', async (message) => {
             .addFields(
                 { 
                     name: '💕 Nhóm Lệnh Tương Tác', 
-                    value: '• \`!hon @user\`: Gửi một cái hôn nồng cháy.\n• \`!doxonuoc @user\`: 🪣 Đổ xô nước đá lạnh buốt hoặc tạt nước 🌊 vào mặt ai đó.\n• \`!hadoc @user\`: 🧪 Lén bỏ thuốc độc khiến đối phương sùi bọt mép ☠️.\n• \`!chichdien @user\`: ⚡ Rút dùi cui điện chích tê tái, giật tung tóc 🔌.' 
+                    value: '• \`!hon @user\`: Gửi một cái hôn nồng cháy.\n• \`!dosonuoc @user\`: 🪣 Đổ xô nước đá lạnh buốt hoặc tạt nước 🌊 vào mặt ai đó.\n• \`!hadoc @user\`: 🧪 Lén bỏ thuốc độc khiến đối phương sùi bọt mép ☠️.\n• \`!chichdien @user\`: ⚡ Rút dùi cui điện chích tê tái, giật tung tóc 🔌.' 
                 },
                 { 
                     name: '🧑‍🍳 Nhóm Lệnh Làm Bánh (Mini-Game)', 
-                    value: '• \`!timnguyenlieu\`: Lục tủ lạnh tìm nguyên liệu ngẫu nhiên (🌾 Bột mì, 🍬 Đường, 🥚 Trứng).\n• \`!tuido\`: Kiểm tra số lượng nguyên liệu hiện có và xem tổng điểm thợ bánh của bạn.\n• \`!nuongbanh\`: Tiêu hao **1 Bột + 1 Đường + 1 Trứng** để nướng bánh.\n• \`!baxuong\` hoặc \`!topbanh\`: Xem bảng xếp hạng những thợ bánh đỉnh nhất server.' 
+                    value: '• \`!timnguyenlieu\`: Lục tủ lạnh tìm nguyên liệu ngẫu nhiên (🌾 Bột mì, 🍬 Đường, 🥚 Trứng).\n• \`!tuido\`: Kiểm tra số lượng nguyên liệu hiện có và xem tổng điểm thợ bánh của bạn.\n• \`!nuongbanh\`: Tiêu hao **1 Bột + 1 Đường + 1 Trứng** để nướng bánh.\n• \`!baxuong\` hoặc \`!topbanh\`: Xem bảng xếp hạng những thợ bánh đỉnh nhất server.\n• \`!congdiem @user <số>\`: Cộng điểm thợ bánh cho thành viên (chỉ quản trị viên).' 
                 }
             )
             .setFooter({ text: 'Chúc các bạn chơi game vui vẻ!' })
@@ -159,6 +159,32 @@ client.on('messageCreate', async (message) => {
         return message.channel.send({ embeds: [embed] });
     }
 
+
+    // Lệnh quản trị: !congdiem @user <số điểm>
+    if (command === '!congdiem') {
+        if (!message.member.permissions.has('Administrator')) {
+            return message.reply('⛔ Chỉ quản trị viên mới được dùng lệnh cộng điểm.');
+        }
+
+        const target = message.mentions.users.first();
+        const points = Number(argsContent[2]);
+
+        if (!target || !Number.isInteger(points) || points <= 0) {
+            return message.reply('Cách dùng: `!congdiem @user <số điểm>` — số điểm phải là số nguyên dương.');
+        }
+
+        if (target.bot) {
+            return message.reply('❌ Không thể cộng điểm cho bot.');
+        }
+
+        checkInventory(target.id);
+        userInventories[target.id].diem += points;
+
+        return message.channel.send(
+            `✅ Đã cộng **${points} điểm** thợ bánh cho <@${target.id}>. Tổng điểm hiện tại: **${userInventories[target.id].diem}**.`
+        );
+    }
+
     if (command === '!baxuong' || command === '!topbanh') {
         const sortedList = Object.keys(userInventories)
             .map(id => ({ id, diem: userInventories[id].diem }))
@@ -184,7 +210,7 @@ client.on('messageCreate', async (message) => {
         return message.channel.send({ embeds: [embed] });
     }
 
-    if (command === '!doxonuoc') {
+    if (command === '!dosonuoc') {
         const targetArgs = message.content.slice(10).trim();
         if (!targetArgs) return message.channel.send(`<@${message.author.id}> định đổ nước vào ai thế? Tag người đó vào nhé! 🪣`);
 
