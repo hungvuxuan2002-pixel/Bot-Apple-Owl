@@ -162,15 +162,27 @@ client.on('messageCreate', async (message) => {
 
     // Lệnh quản trị: !congdiem @user <số điểm>
     if (command === '!congdiem') {
-        if (!message.member.permissions.has('Administrator')) {
+        if (!message.member?.permissions.has('Administrator')) {
             return message.reply('⛔ Chỉ quản trị viên mới được dùng lệnh cộng điểm.');
         }
 
         const target = message.mentions.users.first();
-        const points = Number(argsContent[2]);
 
-        if (!target || !Number.isInteger(points) || points <= 0) {
-            return message.reply('Cách dùng: `!congdiem @user <số điểm>` — số điểm phải là số nguyên dương.');
+        // Lấy số điểm từ nội dung lệnh, bỏ phần tên lệnh và mention
+        const pointArgs = message.content
+            .trim()
+            .split(/\s+/)
+            .slice(1)
+            .filter(arg => !/^<@!?\d+>$/.test(arg));
+
+        const pointsText = pointArgs[pointArgs.length - 1];
+        const points = Number(pointsText);
+
+        if (!target || !pointsText ||
+            !Number.isSafeInteger(points) || points <= 0) {
+            return message.reply(
+                'Cách dùng: `!congdiem @user <số điểm>` — số điểm phải là số nguyên dương.'
+            );
         }
 
         if (target.bot) {
@@ -181,7 +193,8 @@ client.on('messageCreate', async (message) => {
         userInventories[target.id].diem += points;
 
         return message.channel.send(
-            `✅ Đã cộng **${points} điểm** thợ bánh cho <@${target.id}>. Tổng điểm hiện tại: **${userInventories[target.id].diem}**.`
+            `✅ Đã cộng **${points} điểm** thợ bánh cho <@${target.id}>. ` +
+            `Tổng điểm hiện tại: **${userInventories[target.id].diem}**.`
         );
     }
 
