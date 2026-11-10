@@ -180,9 +180,9 @@ client.on('messageCreate', async (message) => {
         const randomGif = hoathieuGifs[Math.floor(Math.random() * hoathieuGifs.length)];
 
         const embed = new EmbedBuilder()
-            .setDescription(`🔥 **${message.author.username}** vừa đưa ${targetMember} vào lò hỏa thiêu trong mini-game!`)
+            .setDescription(`🔥 **${message.author.username}** vừa đưa ${targetMember} vào lò hỏa thiêu!`)
             .setColor("#FF0000")
-            .setImage(randomGif)
+            .setImage(https://media.giphy.com/media/1n4iuWZFnTeN6qvdpD/giphy.gif)
             .setFooter({ text: "Vì bạn xứng đáng :)))" })
             .setTimestamp();
 
