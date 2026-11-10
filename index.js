@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,7 +25,7 @@ const client = new Client({
     ]
 });
 
-const userInventories = {}; 
+const userInventories = {};
 
 function checkInventory(userId) {
     if (!userInventories[userId]) {
@@ -51,19 +52,19 @@ client.on('messageCreate', async (message) => {
     const command = argsContent[0].toLowerCase();
     const userId = message.author.id;
 
-     if (command === '!guide' || command === '!help') {
+    if (command === '!guide' || command === '!help') {
         const embed = new EmbedBuilder()
             .setTitle('📖 CẨM NANG HƯỚNG DẪN SỬ DỤNG BOT')
             .setDescription(`Chào mừng bạn đến với hệ thống tương tác và mini-game của Server! Dưới đây là danh sách các lệnh bạn có thể sử dụng:`)
             .setColor('#00FFCA')
             .addFields(
-                { 
-                    name: '💕 Nhóm Lệnh Tương Tác', 
-                    value: '• \`!hon @user\`: Gửi một cái hôn nồng cháy.\n• \`!doxonuoc @user\`: 🪣 Đổ xô nước đá lạnh buốt hoặc tạt nước 🌊 vào mặt ai đó.\n• \`!hadoc @user\`: 🧪 Lén bỏ thuốc độc khiến đối phương sùi bọt mép ☠️.\n• \`!chichdien @user\`: ⚡ Rút dùi cui điện chích tê tái, giật tung tóc 🔌.' 
+                {
+                    name: '💕 Nhóm Lệnh Tương Tác',
+                    value: '• `!hon @user`: Gửi một cái hôn nồng cháy.\n• `!doxonuoc @user`: 🪣 Đổ xô nước đá lạnh buốt hoặc tạt nước 🌊 vào mặt ai đó.\n• `!hadoc @user`: 🧪 Lén bỏ thuốc độc khiến đối phương sùi bọt mép ☠️.\n• `!chichdien @user`: ⚡ Rút dùi cui điện chích tê tái, giật tung tóc 🔌.\n• `!hoathieu @user`: 🔥 Đưa thành viên vào lò hỏa thiêu .'
                 },
-                { 
-                    name: '🧑‍🍳 Nhóm Lệnh Làm Bánh (Mini-Game)', 
-                    value: '• \`!timnguyenlieu\`: Lục tủ lạnh tìm nguyên liệu ngẫu nhiên (🌾 Bột mì, 🍬 Đường, 🥚 Trứng).\n• \`!tuido\`: Kiểm tra số lượng nguyên liệu hiện có và xem tổng điểm thợ bánh của bạn.\n• \`!nuongbanh\`: Tiêu hao **1 Bột + 1 Đường + 1 Trứng** để nướng bánh.\n• \`!baxuong\` hoặc \`!topbanh\`: Xem bảng xếp hạng những thợ bánh đỉnh nhất server.\n• \`!congdiem @user <số>\`: Cộng điểm thợ bánh cho thành viên (chỉ quản trị viên).' 
+                {
+                    name: '🧑‍🍳 Nhóm Lệnh Làm Bánh (Mini-Game)',
+                    value: '• `!timnguyenlieu`: Lục tủ lạnh tìm nguyên liệu ngẫu nhiên (🌾 Bột mì, 🍬 Đường, 🥚 Trứng).\n• `!tuido`: Kiểm tra số lượng nguyên liệu hiện có và xem tổng điểm thợ bánh của bạn.\n• `!nuongbanh`: Tiêu hao **1 Bột + 1 Đường + 1 Trứng** để nướng bánh.\n• `!baxuong` hoặc `!topbanh`: Xem bảng xếp hạng những thợ bánh đỉnh nhất server.\n• `!congdiem @user <số>`: Cộng điểm thợ bánh cho thành viên (chỉ quản trị viên).'
                 }
             )
             .setFooter({ text: 'Chúc các bạn chơi game vui vẻ!' })
@@ -125,29 +126,34 @@ client.on('messageCreate', async (message) => {
     if (command === '!nuongbanh') {
         checkInventory(userId);
         const inv = userInventories[userId];
+
         if (inv.bot < 1 || inv.duong < 1 || inv.trung < 1) {
             return message.reply('❌ Thiếu nguyên liệu rồi! Bạn cần ít nhất **1 Bột**, **1 Đường** và **1 Trứng** để làm một chiếc bánh.');
         }
-        inv.bot -= 1; inv.duong -= 1; inv.trung -= 1;
-        
+
+        inv.bot -= 1;
+        inv.duong -= 1;
+        inv.trung -= 1;
+
         const tile = Math.random() * 100;
         let ketQua = "";
         let color = "#AA8200";
+
         if (tile < 20) {
             color = "#FF0000";
             ketQua = "🔥 **Ôi hỏng rồi!** Bạn quên canh giờ khiến chiếc bánh **bị cháy đen thui**. Không kiếm được điểm nào cả!";
         } else if (tile < 50) {
             color = "#FFA500";
             inv.diem += 5;
-            ketQua = "🤢 **Hơi đen một tí!** Chiếc bánh còn hơi sống và nhão, nhưng ăn tạm vẫn vớt vát được chút ít.\n\n🏆 *Bạn nhận được:* \`+5\` điểm.";
+            ketQua = "🤢 **Hơi đen một tí!** Chiếc bánh còn hơi sống và nhão, nhưng ăn tạm vẫn vớt vát được chút ít.\n\n🏆 *Bạn nhận được:* `+5` điểm.";
         } else if (tile < 90) {
             color = "#00FF00";
             inv.diem += 20;
-            ketQua = "🎂 **Tuyệt vời ông mặt trời!** Bạn đã làm ra một chiếc **Bánh Kem Thơm Ngon** chuẩn vị nhà hàng năm sao!\n\n🏆 *Bạn nhận được:* \`+20\` điểm.";
+            ketQua = "🎂 **Tuyệt vời ông mặt trời!** Bạn đã làm ra một chiếc **Bánh Kem Thơm Ngon** chuẩn vị nhà hàng năm sao!\n\n🏆 *Bạn nhận được:* `+20` điểm.";
         } else {
             color = "#FFD700";
             inv.diem += 50;
-            ketQua = "👑 **SIÊU PHẨM THỢ BÁNH!** Chiếc bánh nướng vàng đều, xốp mịn hoàn hảo đến mức cả server phải trầm trồ ngước nhìn!\n\n🏆 *Bạn nhận được:* \`+50\` điểm.";
+            ketQua = "👑 **SIÊU PHẨM THỢ BÁNH!** Chiếc bánh nướng vàng đều, xốp mịn hoàn hảo đến mức cả server phải trầm trồ ngước nhìn!\n\n🏆 *Bạn nhận được:* `+50` điểm.";
         }
 
         const embed = new EmbedBuilder()
@@ -159,6 +165,29 @@ client.on('messageCreate', async (message) => {
         return message.channel.send({ embeds: [embed] });
     }
 
+    // Lệnh tương tác: !hoathieu @user
+    if (command === '!hoathieu') {
+        const targetMember = message.mentions.members.first();
+
+        if (!targetMember) {
+            return message.reply('Tag người muốn hỏa thiêu nhé! 🔥');
+        }
+
+        const hoathieuGifs = [
+            "https://media.giphy.com/media/1n4iuWZFnTeN6qvdpD/giphy.gif"
+        ];
+
+        const randomGif = hoathieuGifs[Math.floor(Math.random() * hoathieuGifs.length)];
+
+        const embed = new EmbedBuilder()
+            .setDescription(`🔥 **${message.author.username}** vừa đưa ${targetMember} vào lò hỏa thiêu trong mini-game!`)
+            .setColor("#FF0000")
+            .setImage(randomGif)
+            .setFooter({ text: "Vì bạn xứng đáng :)))" })
+            .setTimestamp();
+
+        return message.channel.send({ embeds: [embed] });
+    }
 
     // Lệnh quản trị: !congdiem @user <số điểm>
     if (command === '!congdiem') {
@@ -168,7 +197,6 @@ client.on('messageCreate', async (message) => {
 
         const target = message.mentions.users.first();
 
-        // Lấy số điểm từ nội dung lệnh, bỏ phần tên lệnh và mention
         const pointArgs = message.content
             .trim()
             .split(/\s+/)
@@ -210,6 +238,7 @@ client.on('messageCreate', async (message) => {
 
         let description = '';
         const medals = ['🥇', '🥈', '🥉', '✨', '✨'];
+
         sortedList.forEach((user, index) => {
             description += `${medals[index]} **Top ${index + 1}:** <@${user.id}> — **${user.diem}** điểm\n`;
         });
@@ -225,17 +254,19 @@ client.on('messageCreate', async (message) => {
 
     if (command === '!doxonuoc') {
         const targetArgs = message.content.slice(10).trim();
-        if (!targetArgs) return message.channel.send(`<@${message.author.id}> định đổ nước vào ai thế? Tag người đó vào nhé! 🪣`);
+
+        if (!targetArgs) {
+            return message.channel.send(`<@${message.author.id}> định đổ nước vào ai thế? Tag người đó vào nhé! 🪣`);
+        }
 
         const gifs = [
             "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExY28wMzdoanppa3pjdzg2dHQ3b205bGl3bHBoMWxtZzA5N2o5YzloeCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Za2x9wbfVuQb6/giphy.webp"
-            
         ];
 
         const responses = [
-            `<@${message.author.id}> đã đổ nguyên một xô nước đá lạnh buốt lên đầu ${targetArgs}! 🥶`,
+            `<@${message.author.id}> đã đổ nguyên một xô nước đá lạnh buốt lên đầu ${targetArgs}! 🥶`
         ];
-        
+
         const embed = new EmbedBuilder()
             .setDescription(responses[Math.floor(Math.random() * responses.length)])
             .setColor("#00BFFF")
@@ -247,7 +278,10 @@ client.on('messageCreate', async (message) => {
 
     if (command === '!hadoc') {
         const targetArgs = message.content.slice(7).trim();
-        if (!targetArgs) return message.channel.send(`<@${message.author.id}> định hạ độc ai cơ? Gắn thẻ họ vào đi! 🧪`);
+
+        if (!targetArgs) {
+            return message.channel.send(`<@${message.author.id}> định hạ độc ai cơ? Gắn thẻ họ vào đi! 🧪`);
+        }
 
         const gifs = [
             "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjA4MTJxeWUzeHhtNzRpZXd3OWhpYTlodXBhcHFwajJ6MWo0eHRxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE4hinbJvjsgGxW/giphy.gif"
@@ -268,14 +302,17 @@ client.on('messageCreate', async (message) => {
 
     if (command === '!chichdien') {
         const targetArgs = message.content.slice(10).trim();
-        if (!targetArgs) return message.channel.send(`<@${message.author.id}> muốn chích điện ai thế? Nhớ tag tên nhé! ⚡`);
+
+        if (!targetArgs) {
+            return message.channel.send(`<@${message.author.id}> muốn chích điện ai thế? Nhớ tag tên nhé! ⚡`);
+        }
 
         const gifs = [
             "https://media.tenor.com/WK-AZItKuX0AAAAM/abster-abstract.gif"
         ];
 
         const responses = [
-            `<@${message.author.id}> rút dùi cui điện ra và chích... ${targetArgs} giật bắn người, tóc dựng ngược! ⚡`,
+            `<@${message.author.id}> rút dùi cui điện ra và chích... ${targetArgs} giật bắn người, tóc dựng ngược! ⚡`
         ];
 
         const embed = new EmbedBuilder()
